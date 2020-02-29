@@ -1,0 +1,10 @@
+|Div7
+x[0] => ~NO_FANOUT~
+x[1] => ~NO_FANOUT~
+x[2] => ~NO_FANOUT~
+x[3] => ~NO_FANOUT~
+x[4] => ~NO_FANOUT~
+x[5] => ~NO_FANOUT~
+IsDivisible <= comb.DB_MAX_OUTPUT_PORT_TYPE
+
+
