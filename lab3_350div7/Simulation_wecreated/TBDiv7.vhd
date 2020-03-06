@@ -25,19 +25,33 @@ DUT:	Entity work.Div7 generic map( N => N )
 -- Enter your code for generating stimuli.
 Stimulus:
 	Process
+		variable myvalue: integer := 1;
+		variable incrementvalue : integer := 0;
 
 	Begin
-
-	while 1 loop
-		x <= '';
+		--sets x <= unknown,  clears the start
+		x <= '000000000000000000';
+		start <='0';
+		--wait until rising edge of clock
 		wait until rising_edge(clk);
-		if (CLK'event and CLK = '1') then
-			assert x<= report "Start" severity warning;
-		end if;
-		
-	end loop;
-
-
+			--casting
+			x <=  std_logic_vector(to_unsigned(TestValue(myvalue)+incrementvalue,N));
+			
+			if (myvalue > 10) then
+					--reset
+					myvalue := 0;
+					incrementvalue := 0;
+				else
+					if (incrementvalue >= 6) then
+						myvalue := myvalue + 1;
+						incrementvalue := 0;
+					else
+						incrementvalue := incrementvalue + 1;
+					end if;
+				end if;		
+			
+			
+		wait until rising_edge(done);
 
 	End Process Stimulus;
 
@@ -67,6 +81,16 @@ TBDiv7:
 Detector:
 	Process
 	Begin
+		wait until rising_edge(start)
+			done <= '0';
+			
+		wait until rising_edge(clk)
+		
+			if(IsDivisible'stable(StableTime) and not IsDivisible = 'U') then
+				done <= '1';
+				assert false report "Value not stable for 4 ns" severity error;
+			end if;
+	
 	End Process Detector;
 End Architecture behavioural;
 
