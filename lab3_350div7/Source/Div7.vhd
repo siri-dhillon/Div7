@@ -15,22 +15,23 @@ Architecture structural of Div7 is
 	signal SA1_B0,SA2_G0,SA3_B2,SA4_B0,SA5_B1,SA6_B2 : std_logic;
 	signal CA1_B1,CA2_G1,CA3_G2,CA4_B1,CA5_B2,CA6_G2 : std_logic;
 -- level 1 outputs
-	signal SB0_,SB1_G0,SB2_G1,: std_logic;
+	signal SB1_G0,SB2_G1,: std_logic;
 	signal CB0_G0,CB1_G1,CB2_G2 : std_logic;
 -- level 2 outputs
-	signal SB0_,SB1_G0,SB2_G1,: std_logic;
+	signal SB1_G0,SB2_G1,: std_logic;
 	signal CB0_G0,CB1_G1,CB2_G2 : std_logic;
 -- level 2 outputs
-	signal SG0_,SG1_D0,SG2_D1,: std_logic;
+	signal SG1_D0,SG2_D1,: std_logic;
 	signal CG0_D0,CG1_D1,CG2_W0 : std_logic;
 -- level 3 outputs
-	signal SD0_,SD1_T0: std_logic;
+	signal SD1_T0: std_logic;
 	signal CD0_T0,CD1_W0 : std_logic;
 -- level 4 outputs
-	signal ST0_: std_logic;
+--	signal ST0_: std_logic;
 	signal CT0_W0 : std_logic;
 
 --output 
+	signal compareValue: unsigned(5 downto 0); 
 	signal output: std_logic_vector(5 downto 0);
 Begin
 
@@ -61,12 +62,14 @@ Begin
 	
 --checking if output is /63//14/7/0
 
-if (X = 5)  then
-	Z <= A;
-elsif (X >= 5) then
-	Z <= B;
+	--cast 
+	compareValue <= to_unsigned(output,6);
+	
+
+if (compareValue = 0 or compareValue = 7 or compareValue = 14 or compareValue = 21 or compareValue = 35 or compareValue = 42 or compareValue = 49 or compareValue = 56 or compareValue = 63       )  then
+	IsDivisible <= '1';
 else
-	Z < C;
+	IsDivisible < '0';
 end if;
 
 	
