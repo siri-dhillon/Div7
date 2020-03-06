@@ -25,7 +25,20 @@ DUT:	Entity work.Div7 generic map( N => N )
 -- Enter your code for generating stimuli.
 Stimulus:
 	Process
+
 	Begin
+
+	while 1 loop
+		x <= '';
+		wait until rising_edge(clk);
+		if (CLK'event and CLK = '1') then
+			assert x<= report "Start" severity warning;
+		end if;
+		
+	end loop;
+
+
+
 	End Process Stimulus;
 
 TBDiv7:
